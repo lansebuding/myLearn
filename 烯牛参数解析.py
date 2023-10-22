@@ -37,9 +37,12 @@ response = requests.post(
     cookies=cookies,
     headers=headers,
     json=json_data,
-)
-response.encoding='utf-8'
-print(response.text)
+).json()
+
+jsCode1 = open('./烯牛返回参数解析.js','r',encoding='utf-8').read()
+params1 = execjs.compile(jsCode1).call('main',response['d'])
+
+print(params1)
 
 # Note: json_data will not be serialized by requests
 # exactly as it was in the original request.
