@@ -1,18 +1,87 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body>
-    <audio id="ad" src="./1.mp3">点击</audio>
-    <button onclick="clc()">点击</button>
-    <script>
-      function clc() {
-        const dom = document.getElementById("ad");
-        dom.play();
-      }
-    </script>
-  </body>
+<html>
+<head>
+	<title>加载腾讯地图</title>
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css"
+	   integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+	   crossorigin=""/>
+   	<!-- Make sure you put this AFTER Leaflet's CSS -->
+	<script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js"
+	   integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
+	   crossorigin=""></script>
+	 <style type="text/css">
+	 	html, body { height: 100%; width: 100%; }
+	 	#mapid { height: 100%; width: 100%; }
+	 </style>
+</head>
+<body>
+	<div id="mapid"></div>
+	<script type="text/javascript">
+		var map = L.map('mapid').setView([30, 120], 5);
+		
+		L.TileLayer.WebDogTileLayer = L.TileLayer.extend({
+		    getTileUrl: function (tilePoint) {
+		        var urlArgs,
+		            getUrlArgs = this.options.getUrlArgs;
+ 
+		        if (getUrlArgs) {
+		            var urlArgs = getUrlArgs(tilePoint);
+		        } else {
+		            urlArgs = {
+		                z: tilePoint.z,
+		                x: tilePoint.x,
+		                y: tilePoint.y,
+		            };
+		        }
+ 
+		        return L.Util.template(this._url, L.extend(urlArgs, this.options, {s: this._getSubdomain(tilePoint)}));
+		    }
+		});
+ 
+		L.tileLayer.webdogTileLayer = function (url, options) {
+		    return new L.TileLayer.WebDogTileLayer(url, options);
+		};
+ 
+		
+	    var options = {
+	        subdomains: '012',
+	        getUrlArgs: function (tilePoint) {
+	            return {
+	                z: tilePoint.z,
+	                x: tilePoint.x,
+	                y: Math.pow(2, tilePoint.z) - 1 - tilePoint.y,
+	                x16: Math.floor(tilePoint.x / 16.0),
+	                y16: Math.floor((Math.pow(2, tilePoint.z) - 1 - tilePoint.y) / 16.0) 
+	            };
+	        }        
+	    };
+ 
+	    // 矢量底图服务
+		// var url = 'http://rt{s}.map.gtimg.com/realtimerender?z={z}&x={x}&y={y}&type=vector&style=0',
+ 
+		//地形图url
+		// http://p{s}.map.gtimg.com/demTiles/{z}/{x16}/{y16}/{x}_{y}.jpg
+		// 地形图标注服务（道路及poi）
+		// https://rt3.map.gtimg.com/tile?z=12&x=3353&y=2414&type=vector&styleid=3&version=376
+		// var url = 'http://rt{s}.map.gtimg.com/tile?z={z}&x={x}&y={y}&type=vector&styleid=3&version=376',
+ 
+		//卫星图url
+		// http://p{s}.map.gtimg.com/sateTiles/{z}/{x16}/{y16}/{x}_{y}.jpg
+		// 地形图标注服务（道路及poi）
+		// https://rt3.map.gtimg.com/tile?z=12&x=3348&y=2411&styleid=2&version=376
+		// var url = 'http://rt{s}.map.gtimg.com/tile?z={z}&x={x}&y={y}&styleid=2&version=376',
+ 
+	    //加载矢量底图
+		// L.tileLayer.webdogTileLayer('http://rt{s}.map.gtimg.com/realtimerender?z={z}&x={x}&y={y}&type=vector&style=0', options).addTo(map);
+ 
+		//加载地形图
+		// L.tileLayer.webdogTileLayer('http://p{s}.map.gtimg.com/demTiles/{z}/{x16}/{y16}/{x}_{y}.jpg', options).addTo(map);
+		// L.tileLayer.webdogTileLayer('http://rt{s}.map.gtimg.com/tile?z={z}&x={x}&y={y}&type=vector&styleid=3&version=376', options).addTo(map);
+ 
+		// //加载影像图
+		L.tileLayer.webdogTileLayer('http://p{s}.map.gtimg.com/sateTiles/{z}/{x16}/{y16}/{x}_{y}.jpg', options).addTo(map);
+		L.tileLayer.webdogTileLayer('http://rt{s}.map.gtimg.com/tile?z={z}&x={x}&y={y}&styleid=2&version=376', options).addTo(map);
+ 
+	 </script>
+</body>
 </html>

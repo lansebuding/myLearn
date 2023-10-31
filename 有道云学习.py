@@ -29,7 +29,7 @@ headers = {
 
 time_now = int(round(time.time()*1000))
 code1 = open('./有道云sign破解.js','r',encoding='utf-8').read()
-params = execjs.compile(code1).call('main',time_now)
+params:str = execjs.compile(code1).call('main',time_now)
 
 inputs = input('请输入需要翻译的文字：')
 data = {
