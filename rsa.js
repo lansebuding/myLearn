@@ -21,3 +21,21 @@ function encrypt(data){
     k.setPublicKey(i);
     return k.encrypt(data)
 }
+
+
+(function(){
+    var v = ''
+    Object.defineProperty(document,'cookie',{
+        get:function(){
+            return v
+        },
+        set:function(val){
+            if(val.indexOf('v=')>-1){
+                debugger
+            }
+            console.log('成功捕获v=======：'+val);
+            v = val
+            return val
+        }
+    })
+})();
