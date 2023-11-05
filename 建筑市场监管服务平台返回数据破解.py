@@ -5,6 +5,7 @@ url:https://jzsc.mohurd.gov.cn/APi/webApi/dataservice/query/comp/list?pg=0&pgsz=
 """
 
 import requests
+import execjs
 
 url = 'https://jzsc.mohurd.gov.cn/APi/webApi/dataservice/query/comp/list'
 
@@ -36,35 +37,11 @@ headers = {
 
 data = {
     "pg":'0',
-    "pgsz":'0',
-    "total":'0'
+    "pgsz":'15',
+    "total":'450'
 }
 
 res = requests.get(url=url,params=data,cookies=cookies,headers=headers)
-res.encoding='utf-8'
-
-# print(res.text)
-
-# 进行解密，本次获取的数据是使用AES CBC模式进行加密的
-
-key = 'jo8j9wGw%6HbxfFn'.encode() # 秘钥
-iv = '0123456789ABCDEF'.encode()  # 偏移量
-
-import base64
-from Crypto.Util import Padding
-from Crypto.Cipher import AES
-from binascii import a2b_hex,b2a_hex
-import json
-
-aes = AES.new(key,AES.MODE_CBC,iv=iv)
-
-data1 = aes.decrypt(a2b_hex(res.text)).decode()
-
-data1=data1[19:]
-data1=data1[:-34]
-
-# print(data1)
-newList = list(json.loads(data1)['list'])
-
-for i in newList:
-    print(f'名字是：{i["QY_FR_NAME"]}，公司名字是：{i["QY_NAME"]}')
+code = open('./监管.js',encoding='utf-8').read()
+datas = execjs.compile(code).call('b',res.text)
+print(datas)

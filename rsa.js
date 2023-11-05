@@ -13,11 +13,19 @@
 
 // console.log(en('你好'));
 
-const jsEncrypt = require('jsencrypt')
-const i = 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCeiLxP4ZavN8qhI+x+whAiFpGWpY9y1AHSQC86qEMBVnmqC8vdZAfxxuQWeQaeMWG07lXhXegTjZ5wn9pHnjg15wbjRGSTfwuZxSFW6sS3GYlrg40ckqAagzIjkE+5OLPsdjVYQyhLfKxj/79oOfjl/lV3rQnk/SSczHW0PEyUbQIDAQAB'
+// const jsEncrypt = require("jsencrypt");
+// const i =
+//   "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCeiLxP4ZavN8qhI+x+whAiFpGWpY9y1AHSQC86qEMBVnmqC8vdZAfxxuQWeQaeMWG07lXhXegTjZ5wn9pHnjg15wbjRGSTfwuZxSFW6sS3GYlrg40ckqAagzIjkE+5OLPsdjVYQyhLfKxj/79oOfjl/lV3rQnk/SSczHW0PEyUbQIDAQAB";
+// const k = new jsEncrypt();
+// k.setPublicKey(i);
+// function encrypt(data) {
+//   return k.encrypt(data);
+// }
 
-function encrypt(data){
-    const k = new jsEncrypt()
-    k.setPublicKey(i);
-    return k.encrypt(data)
+const crypto = require("crypto-js");
+
+function en(m) {
+  return new crypto.SHA512(m).toString();
 }
+
+console.log(en("123456"));

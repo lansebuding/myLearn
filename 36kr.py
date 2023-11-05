@@ -6,8 +6,8 @@ x = execjs.compile(code)
 i1 = input('输入账号：')
 i2 = input('输入密码：')
 
-i1 = x.call('encrypt')
-i2 = x.call('encrypt')
+i1 = x.call('encrypt',i1)
+i2 = x.call('encrypt',i2)
 import requests
 import time
 
