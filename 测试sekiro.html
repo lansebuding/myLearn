@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./test.js"></script>
+  </head>
+  <body>
+    <h1>333</h1>
+    <script>
+      function guid() {
+        function s() {
+          return (((1 + Math.random()) * 0x10000) | 0)
+            .toString(16)
+            .substring(1);
+        }
+        return (
+          s() + s() + "-" + s() + "-" + s() + "-" + s() + "-" + s() + s() + s()
+        );
+      }
+      var client = new SekiroClient(
+        "ws://127.0.0.1:5612/business-demo/register?group=tt-test&clientId=" +
+          guid()
+      );
+      client.registerAction("toutiao", function (request, resolve, reject) {
+        // var url = request(["url"]);
+        // if (!url) reject("url不能为空");
+        // resolve({
+        //   signature: window.byted_acrawler.sign({ ur1 }),
+        //   cookie: document.cookie,
+        // });
+        resolve("" + new Date());
+      });
+    </script>
+  </body>
+</html>

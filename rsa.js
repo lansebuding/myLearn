@@ -22,10 +22,25 @@
 //   return k.encrypt(data);
 // }
 
-const crypto = require("crypto-js");
-
-function en(m) {
-  return new crypto.SHA512(m).toString();
+function encrypt(data) {
+  const k = new jsEncrypt();
+  k.setPublicKey(i);
+  return k.encrypt(data);
 }
 
-console.log(en("123456"));
+(function () {
+  var v = "";
+  Object.defineProperty(document, "cookie", {
+    get: function () {
+      return v;
+    },
+    set: function (val) {
+      if (val.indexOf("v=") > -1) {
+        debugger;
+      }
+      console.log("成功捕获v=======：" + val);
+      v = val;
+      return val;
+    },
+  });
+})();
