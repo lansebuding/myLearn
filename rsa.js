@@ -44,3 +44,15 @@ function encrypt(data) {
     },
   });
 })();
+
+
+
+(function (){
+  var x = XMLHttpRequest.prototype.open
+  XMLHttpRequest.prototype.open = function(method,url,async){
+    if(url.indexOf('analysis')){
+      debugger
+    }
+    return x.apply(this,arguments)
+  }
+})()

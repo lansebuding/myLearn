@@ -1,7 +1,7 @@
 import requests
 
 def get_v():
-  url = 'http://127.0.0.1:12080/go?group=t&name=test&action=get_v'
+  url = 'http://127.0.0.1:12080/go?group=t&name=t2&action=fn'
   response=requests.get(url=url).json()
   return response['data']
 

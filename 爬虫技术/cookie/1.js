@@ -66,3 +66,18 @@ Function.prototype.constructor = function(){
   }
   return Function.prototype._back.apply(this,arguments)
 }
+
+
+
+
+
+const obj = {
+  "url": "/rank/index",
+  "params": {
+      "brand": "paid",
+      "device": "iphone",
+      "country": "cn",
+      "genre": "36"
+  },
+  "baseURL": "https://api.qimai.cn",
+}

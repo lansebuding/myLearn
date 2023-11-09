@@ -1,31 +1,15 @@
-from PIL import Image,ImageDraw,ImageFont
+"""
+flask搭建api
+
+docker部署
+"""
+
+from flask import Flask,make_response
+from io import BytesIO
 import random
+from PIL import Image,ImageDraw,ImageFont
 
-# res = Image.open('./验证码/1.jpg')
-
-# 图片大小
-# print(res.size)
-
-# 图片通道
-# print(res.mode)
-
-# 图片详细信息
-# print(res.info)
-
-# 图片修改大小
-# res1 = res.resize((640,300))
-# res1.show('2.jpg')
-
-#图片旋转
-# res1 = res.rotate(15)
-# res1.save()
-# res1.show()
-
-# 翻转
-# res1 = res.transpose(Image.FLIP_TOP_BOTTOM)
-# res1 = res.transpose(Image.FLIP_LEFT_RIGHT)
-# res1.show()
-# res1.save('./验证码/2.jpg')
+app = Flask(__name__)
 
 #生成验证码
 def get_color():
@@ -45,8 +29,17 @@ def get_code():
     verify+=char
     c = get_color()
     draw.text((x,y),char,c,font)
-  return verify,image
-# 65-122
-# print(verify)
-# print(chr(90))
-# image.show()
+  by = BytesIO()
+  image.save(by,'PNG')
+  return verify,by.getvalue()
+
+@app.route('/img')
+
+def main():
+  verify,image = get_code()
+  resp = make_response(image)
+  resp.content_type='image/png'
+  return resp
+
+if __name__ == '__main__':
+    app.run()

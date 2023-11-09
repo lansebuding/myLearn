@@ -1,3 +1,19 @@
+"""
+主要是analysis参数破解
+全局搜索analysis发现没有符合要求的参数，猜测该参数是拼接而成
+使用hook找到请求位置
+查询堆栈该参数出现位置，一步步跟进，找到生成位置
+发现使用部分混淆
+扣出js代码并还原
+模拟生成该参数并替换
+请求成功
+
+注意模拟该请求传入参数值要和params参数名称对应
+
+
+"""
+
+
 import requests
 import execjs
 code = open('./爬虫技术/cookie/七麦.js','r',encoding='utf8').read()
@@ -12,15 +28,6 @@ t3 = input('输入地区：')
 arr = [t1, t2, t3, "36"]
 analysis = execjs.compile(code).call('main',arr)
 print(analysis)
-cookies = {
-    'PHPSESSID': 'omjs3k5v346saeq3ddje85l6e4',
-    'qm_check': 'A1sdRUIQChtxen8pI0dAMRcOUFseEHBeQF0JTjVBWCwycRd1QlhAXFEGFUdASAFKBQcCCXsEBRFFIg4aHRoOBnMDARlGR2dQOVdICAolAGgCHBl0B3xUV05KVFsZXVJRWxsKFghJVktYVElWBRVP',
-    'gr_user_id': '1da01ca5-900c-4cff-a017-0e1c77bf000c',
-    'ada35577182650f1_gr_session_id': '94dad51d-361d-47ee-808b-b700cee54b48',
-    'ada35577182650f1_gr_session_id_sent_vst': '94dad51d-361d-47ee-808b-b700cee54b48',
-    'synct': '1699083433.916',
-    'syncd': '-481',
-}
 
 headers = {
     'authority': 'api.qimai.cn',
@@ -47,6 +54,6 @@ params = {
     'genre': '36',
 }
 
-response = requests.get('https://api.qimai.cn/rank/index', params=params, cookies=cookies, headers=headers).json()
+response = requests.get('https://api.qimai.cn/rank/index', params=params, headers=headers).json()
 
 print(response)
