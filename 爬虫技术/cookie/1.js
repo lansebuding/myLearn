@@ -21,7 +21,7 @@
 
   window.XMLHttpRequest.prototype.setRequestHeader = function (key, value) {
     console.log(key,value);
-    if (key == "portal-sign") {
+    if (key.indexOf('EncKey')>-1) {
       debugger;
     }
     return org.apply(this, arguments);
@@ -33,7 +33,7 @@
   var open = window.XMLHttpRequest.prototype.open;
   window.XMLHttpRequest.prototype.open = function (method, url, async) {
     console.log(url);
-      if (url.indexOf("heart-beat") != -1) {
+      if (url.indexOf("sign") != -1) {
           debugger;
       }
       return open.apply(this, arguments);
