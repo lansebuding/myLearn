@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script
+      type="text/javascript"
+      src="https://cdn.bootcss.com/axios/0.18.0/axios.min.js"
+    ></script>
+  </head>
+  <body>
+    <h1 onclick="a()" id="h1">测试</h1>
+    <div id="d1"></div>
+    <script>
+      function a() {
+        axios({
+          method: "get",
+          url: "http://127.0.0.1:5000/api/my-json",
+        }).then((res) => {
+          try {
+            const { datas } = res.data;
+            document.getElementById("d1").innerHTML = "";
+            for (let i = 0; i < 2; i++) {
+              const dom = document.createElement("span");
+              if (i == 0) dom.innerText = datas.name;
+              if (i == 1) dom.innerText = datas.age;
+              document.getElementById("d1").appendChild(dom);
+            }
+          } catch (err) {
+            console.error(err);
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

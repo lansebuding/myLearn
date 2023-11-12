@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.bootcss.com/axios/0.18.0/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@4.4.0/dist/echarts.min.js"></script>
+    <style>
+      .container {
+        display: flex;
+        justify-content: center;
+        margin-top: 30px;
+      }
+      .search-content {
+        width: 80px;
+        font-size: 14px;
+        height: 35px;
+        line-height: 35px;
+        color: #fff;
+        background: blueviolet;
+        text-align: center;
+        cursor: pointer;
+      }
+      .search {
+        line-height: 30px;
+        outline: none;
+        width: 30vw;
+        padding-left: 10px;
+      }
+      .echart {
+        width: 50vw;
+        height: 480px;
+        background: antiquewhite;
+        margin: 0 auto;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div style="height: 35px">
+        <input
+          type="text"
+          class="search"
+          name=""
+          id="s1"
+          placeholder="请输入"
+        />
+      </div>
+      <div class="search-content" onclick="onSearch()">搜索</div>
+    </div>
+    <div class="echart" id="echart"></div>
+    <script>
+      var mCharts = echarts.init(document.getElementById("echart"));
+      var title = "111";
+      var xDataArr = [
+        "1月",
+        "2月",
+        "3月",
+        "4月",
+        "5月",
+        "6月",
+        "7月",
+        "8月",
+        "9月",
+        "10月",
+        "11月",
+        "12月",
+      ];
+      var yDataArr = [
+        3000, 2800, 900, 1000, 800, 700, 1400, 1300, 900, 1000, 800, 600,
+      ];
+      mCharts.setOption(getOption());
+      window.onresize = mCharts.resize;
+      function onSearch() {
+        const value = document.getElementById("s1").value;
+        if (!value) return false;
+        axios({
+          method: "get",
+          url: "http://127.0.0.1:5000/api/test",
+          params: { value },
+        }).then((res) => {
+          const { data } = res;
+          if (data.datas.date) {
+            xDataArr = data.datas.date;
+            yDataArr = data.datas.value;
+            title = data.datas.title;
+            mCharts.setOption(getOption());
+          }
+          console.log(xDataArr);
+          console.log(yDataArr);
+          console.log(title);
+        });
+      }
+      function getOption() {
+        return {
+          title: {
+            text: title,
+            left: "center",
+            top: "20",
+          },
+          tooltip: {
+            trigger: "axis",
+            axisPointer: {
+              type: "line",
+              lineStyle: {
+                color: "red",
+              },
+            },
+          },
+          xAxis: {
+            type: "category",
+            data: xDataArr,
+          },
+          yAxis: {
+            type: "value",
+          },
+          series: [
+            {
+              name: title,
+              data: yDataArr,
+              type: "line", // 设置图表类型为 折线图
+            },
+          ],
+        };
+      }
+    </script>
+  </body>
+</html>
