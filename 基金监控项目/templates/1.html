@@ -79,6 +79,7 @@
         if (!value) return false;
         axios({
           method: "get",
+          // url: "http://127.0.0.1:5000/api/test/"+value,
           url: "http://127.0.0.1:5000/api/test",
           params: { value },
         }).then((res) => {
