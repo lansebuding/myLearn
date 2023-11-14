@@ -6,10 +6,11 @@ import re,time
 op = webdriver.ChromeOptions()
 # 设置不被检测
 op.add_argument('--disable-blink-features=AutomationControlled')
-op.add_experimental_option('useAutomationExtension',False)
-op.add_experimental_option('excludeSwitches',['enable-automation'])
+# op.add_experimental_option('useAutomationExtension',False)
+# op.add_experimental_option('excludeSwitches',['enable-automation'])
 
-path=r'D:\python\chromedriver.exe'
+# path=r'D:\python\chromedriver.exe'
+path=r'D:\PY\python-3.11.5-embed-amd64\chromedriver.exe'
 browser = webdriver.Chrome(executable_path=path,chrome_options=op)
 browser.maximize_window()
 browser.get('https://pic.netbian.top/')
@@ -33,6 +34,7 @@ def spl():
   cro=screen.crop((l,t,r,b))
   cro.save('./selenium/split.png')
 
-spl()
+# spl()
+get_url()
 time.sleep(5)
 browser.quit()
