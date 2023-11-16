@@ -34,6 +34,21 @@ db.my.insert({"id":"001","name":"YJW","age":NumberInt(25),"state":null})
 查看插入的数据：
 db.my.find()
 
+查看插入的数据并格式化：
+db.my.find().pretty()
+
+并集查询：
+db.my.find({$or:[{'state':1},{'age':18}]}).pretty()
+
+自定义查询：
+db.my.find({$where:function(){return !this.state}})
+
+去重：
+db.my.distinct('name')
+
+根据条件去重：
+db.my.distinct('name',{age:{$gt:20}})
+
 插入多条数据：
 db.my.insertMany([{"id":"002","name":"YJW2","age":NumberInt(26),"state":null},{"id":"003","name":"YJW3","age":NumberInt(27),"state":null}])
 
