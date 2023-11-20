@@ -17,7 +17,7 @@ class MyTestPipeline:
 
 
     def open_file(self, spider):
-        self.file = open('./htmls/baidu.html','w',encoding='utf-8')
+        self.file = open('./htmls/t.json','a',encoding='utf-8')
 
     def close_file(self, spider):
         self.file.close()

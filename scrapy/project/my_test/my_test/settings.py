@@ -67,6 +67,12 @@ ITEM_PIPELINES = {
    "my_test.pipelines.MyTestPipeline": 300,
 }
 
+# 配置log输出
+LOG_LEVEL = 'WARNING'
+# LOG_LEVEL = 'INFO'
+# 日志输出
+LOG_FILE = './logs.log'
+
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
 #AUTOTHROTTLE_ENABLED = True
