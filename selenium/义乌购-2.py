@@ -22,11 +22,16 @@ import time,random
 def get_print():
     db= pymongo.MongoClient('127.0.0.1',27017)['py_test']['my']
     res = db.find({})
-    ii = 0
-    for i in res:
-        ii+=1
-        print(i)
-    print(ii)
+    # res = db.find({'title':{'$regex':'超百搭韩版围巾'}})
+    # ii = 0
+    # for i in res:
+    #     ii+=1
+    #     print(i)
+    # print(ii)
+    list1 = list(res)
+    print(list1)
+    print(len(list1))
+
 
 class My_Test:
     """
@@ -34,13 +39,14 @@ class My_Test:
     """
     def __init__(self) -> None:
         self.browser= self.init_browser()
+        self.db,self.client = self.get_client()
         pass
 
     # 连接mongodb
     def get_client(self):
         client = pymongo.MongoClient('127.0.0.1',27017)
         datas = client['py_test']['my']
-        return datas
+        return datas,client
 
     # 初始化selenium连接
     def init_browser(self):
@@ -57,9 +63,9 @@ class My_Test:
         inp = self.browser.find_element(By.ID,'inputkey')
         inp.send_keys('围巾')
         inp.send_keys(Keys.ENTER)
-        time.sleep(1)
+        time.sleep(.5)
         self.get_datas()
-        self.browser.quit()
+        # self.browser.quit()
 
     # 滑动
     def swiper(self):
@@ -71,7 +77,7 @@ class My_Test:
     def get_datas(self):
         self.swiper()
         elements = self.browser.find_elements(By.CSS_SELECTOR,'div.pro_list_product_img2')
-        db=self.get_client()
+        # db=self.get_client()
         for i in elements:
             title = i.find_element(By.CSS_SELECTOR,'a.productloc').get_attribute("title")
             num1 = i.find_element(By.CSS_SELECTOR,'span.pri-left').find_elements(By.TAG_NAME,'font')[0].text
@@ -80,8 +86,8 @@ class My_Test:
             store:str = i.find_element(By.CSS_SELECTOR,'li.product13_company>font>a').text
             address:str = i.find_element(By.CSS_SELECTOR,'li.shshopname').text
             dic = {'title':title,'price':f'{str(num1)+"."+str(num2)}元','start':start.strip(),'store':store.strip(),'address':address.strip(),'createTime':int(time.time())}
-            db.insert_one(dic)
-        print('ok')
+            self.db.insert_one(dic)
+        self.page_change()
 
     # 分页
     def page_change(self):
@@ -92,8 +98,9 @@ class My_Test:
             self.get_datas()
         except Exception as err:
             print('down')
+            self.client.close()
             self.browser.quit()
 
 if __name__=='__main__':
-    # get_print()
-    My_Test().get_connect()
+    get_print()
+    # My_Test().get_connect()
