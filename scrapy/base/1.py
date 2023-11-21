@@ -28,3 +28,12 @@ spider Middlewares（爬虫中间件）：自定义requests请求和response过�
   scrapy crawl my_baidu 启动
 
 """
+
+"""
+scrapy shell 目标网址
+res = response
+使用xpath调试
+res.xpath('//p/text()').getall()
+
+res.xpath('//div[@class="pic"]/@style').getall()
+"""
