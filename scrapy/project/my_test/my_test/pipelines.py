@@ -6,18 +6,26 @@
 
 # useful for handling different item types with a single interface
 from itemadapter import ItemAdapter
+import pymongo
 
 
 class MyTestPipeline:
     def process_item(self, item, spider):
-        self.open_file(spider)
-        self.file.write(item['content'])
-        self.close_file(spider)
+        for i in item['content']:
+            self.db.insert_one(i)
+        print('down')
         return item
 
+    def __init__(self) -> None:
+        self.connect()
 
     def open_file(self, spider):
-        self.file = open('./htmls/t.json','a',encoding='utf-8')
+        self.file = open('./htmls/1.html','w',encoding='utf-8')
 
     def close_file(self, spider):
         self.file.close()
+    
+    def connect(self):
+        client = pymongo.MongoClient(host='localhost',port=27017)
+        db = client['test']['ppp']
+        self.db = db

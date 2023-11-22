@@ -37,3 +37,14 @@ res.xpath('//p/text()').getall()
 
 res.xpath('//div[@class="pic"]/@style').getall()
 """
+
+import pymongo
+client = pymongo.MongoClient(host='localhost',port=27017)
+db = client['test']['ppp']
+res = db.find({})
+ii=0
+for i in res:
+  ii+=1
+  print(i)
+
+print(ii)
