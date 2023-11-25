@@ -1,0 +1,13 @@
+<hr />
+<footer>I am footer</footer>
+<h4>{{nick}}</h4>
+<!-- set定义变量 -->
+{% set uname='李四' %}
+
+<span style="color: red">{{uname}}</span>
+
+<!-- <img style="width: 60px; height: 60px" src="/static/imgs/f.gif" /> -->
+<img
+  style="width: 60px; height: 60px"
+  src="{{url_for('static',filename='imgs/f.gif')}}"
+/>

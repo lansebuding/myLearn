@@ -1,7 +1,37 @@
-from flask import Flask,request,url_for
+from flask import Flask,request,url_for,redirect,Response,make_response
+import random
 
 app = Flask(__name__)
 
+app.json.ensure_ascii=False
+
+@app.route('/api/json')
+def get_Indexs():
+  # 可以直接返回字典，解决编码问题
+  # return {
+  #   'name':'你好'
+  # }
+
+  # 设置状态码
+  # return '你好',200
+
+  # 设置请求头
+  # return '你好',{'Authortion':random.randint(100,200)}
+
+  # 设置三个参数
+  # return '你好',202,{'Authortion':random.randint(100,200)}
+
+  # 列表形式-----响应内容，状态，header
+  return '你好',202,[('Authortion',random.randint(1000,2000)),('Authortion-Two',random.randint(1000,2000))]
+
+@app.route('/api/resp')
+def ins():
+  # return Response(response='你好',status=500,headers=[('AAA',100),('BBB',300)])
+  res = make_response()
+  res.response='你好吗'
+  res.headers.add_header('ASAA','2222')
+  res.status=202
+  return res
 
 @app.route('/api/test/<int:id>')
 def get_Index(id):

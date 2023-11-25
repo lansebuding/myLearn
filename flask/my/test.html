@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="icon"
+      sizes="any"
+      mask
+      href="https://www.baidu.com/favicon.ico"
+    />
+    <style>
+      h1 {
+        color: hotpink;
+      }
+      .sp {
+        padding: 0 16px;
+        border: 1px solid rgba(0, 0, 0, 0.5);
+        color: hotpink;
+      }
+    </style>
+  </head>
+  <!-- 引入宏  并传入参数 -->
+  {% import 'macros/common.html' as mc with context %}
+  <body>
+    <!-- include引入公共组件---不需要with context就可使用参数 -->
+    {% include 'components/header.html' %}
+    <main>
+      <h1>呵呵哈哈哈或</h1>
+      <p>{{name}}--{{age}}</p>
+      <hr />
+      <h3>使用url_for</h3>
+      <p>{{url_for('index')}}</p>
+      <!-- html使用url_for -->
+      <a href="{{url_for('indexs',id=1111)}}">点我</a>
+      <hr />
+      <h3>使用过滤器</h3>
+      <p>过滤前：{{param}}</p>
+      <p>过滤后：{{param|int}}</p>
+      <hr />
+      <h3>默认过滤器--默认值</h3>
+      <p>用户名称是：{{nickName|default('你大爷')}}</p>
+      <p>用户名称是：{{nickName|default('你大爷',boolean=True)}}</p>
+      <p>用户名称是：{{nickName or '你大爷'}}</p>
+      <hr />
+      <!-- safe进行转义--------相当于eval -->
+      <h3>转义</h3>
+      <p>转义前是：{{turn}}</p>
+      <!-- <p>转义后是：{{turn|safe}}</p> -->
+      <h3>自定义转义</h3>
+      <p>转义前是：{{s}}</p>
+      <p>转义后是：{{s|cut}}</p>
+      <h3>自定义时间转换</h3>
+      <p>转义前是：{{old_time}}</p>
+      <p>转义后是：{{old_time|handle_time}}</p>
+      <h3>if控制</h3>
+      {% if ju < 1 %}
+      <p>mmm</p>
+      {% else %}
+      <p>nnn</p>
+      {% endif %}
+      <hr />
+      <h3>for控制</h3>
+      {% for item in list|reverse %}
+      <p>{{item}}----{{loop.index-1}}</p>
+      {% endfor %}
+      <script></script>
+      <hr />
+      {% for i in m %} {% for j in m %} {% if j <= i %}
+      <span class="sp">{{j}} * {{i}} = {{i*j}}</span>
+      {% endif %} {% endfor %}<br /><br />{% endfor %}
+      <hr />
+      <hr />
+      <table>
+        <tr>
+          <td>用户名：</td>
+          <td>{{mc.inp('text','username',nick)}}</td>
+        </tr>
+        <tr>
+          <td>密码：</td>
+          <td>{{mc.inp('password','pwd','')}}</td>
+        </tr>
+        <tr>
+          <td>{{mc.inp('submit','','登录')}}</td>
+        </tr>
+      </table>
+    </main>
+    <!-- include引入公共组件---不需要with context就可使用参数 -->
+    {% include 'components/footer.html' %}
+  </body>
+</html>
