@@ -1,0 +1,7 @@
+{% extends 'tex.html' %} {% block main %}
+<!-- 把父模板的内容拿来 -->
+{{super()}}
+<h3>修改成功</h3>
+{{self.foot()}} {% endblock %} {% block foot %}
+<h3>呵呵呵呵</h3>
+{% endblock %}

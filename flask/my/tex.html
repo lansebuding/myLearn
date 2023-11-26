@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <header>
+      <h2>头部内容</h2>
+    </header>
+    <hr />
+    <main>
+      <!-- block相当于slot -->
+      {% block main %}
+      <p style="color: red">主体内容</p>
+      {% endblock %}
+    </main>
+    <hr />
+    <footer>
+      {% block foot %}
+      <p style="color: yellowgreen">底部内容</p>
+      {% endblock %}
+    </footer>
+  </body>
+</html>
