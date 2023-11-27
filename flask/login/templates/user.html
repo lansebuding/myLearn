@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- src="/static/videos/aaa.mp4" -->
+    <video
+      src="{{url_for('static',filename='videos/aaa.mp4')}}"
+      autoplay
+      muted="muted"
+      loop="loop"
+    ></video>
+    <p>注意前面加上自定义的路径</p>
+    <p>前面使用了user.</p>
+    <!-- <img src="/user/static/1.jpg" alt="" /> -->
+    <img src="{{url_for('user.static',filename='1.jpg')}}" alt="" />
+  </body>
+</html>
