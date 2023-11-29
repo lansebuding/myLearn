@@ -1,4 +1,5 @@
-from flask import render_template, Blueprint, request, make_response, session
+from flask import render_template, Blueprint, request, make_response, session, url_for, redirect, current_app
+from flask.views import MethodView
 import random
 from datetime import datetime, timedelta
 from components.codes import codes
@@ -22,12 +23,14 @@ def register():
 def logout():
     return '登出模块'
 
+
 @user_blue_print.route('/img/')
 def get_image():
     image = codes().main()[1]
     response = make_response(image)
-    response.content_type='image/png'
+    response.content_type = 'image/png'
     return response
+
 
 @user_blue_print.route('/set_cookie/')
 def set_cookie():
@@ -50,7 +53,7 @@ def set_cookie():
 @user_blue_print.route('/set_session/')
 def set_session():
     # 持久化----默认增加31天
-    session.permanent = True
+    # session.permanent = True
 
     # 服务器关闭，session有效期是之前系统保存的有效期
     # 服务器重启，秘钥不变则不会过期
@@ -67,3 +70,34 @@ def get_session():
 def del_session():
     session.pop('my_session')
     return f'删除了一个session对象：{session.get("my_session")}'
+
+
+class LoginView(MethodView):
+    def __jump(self, msg=None):
+        return render_template('login.html', msg=msg)
+
+    def get(self):
+        # print(url_for('user.class_view_login'))
+        print(current_app)
+        return self.__jump()
+
+    def post(self):
+        uname, pwd = request.form.get('uname'), request.form.get('pwd')
+        print(request.form)
+        if uname == 'zs' and pwd == '123456':
+            session['uname'] = uname
+            return redirect(url_for('user.main'))
+        else:
+            return self.__jump('error')
+
+
+@user_blue_print.route('/main/')
+def main():
+    if not session.get('uname'):
+        return redirect(url_for('user.class_view_login'))
+    else:
+        return render_template('user.html')
+
+
+user_blue_print.add_url_rule(
+    '/class_view_login/', view_func=LoginView.as_view('class_view_login'))
