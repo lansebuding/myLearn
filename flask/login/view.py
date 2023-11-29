@@ -1,6 +1,7 @@
 from flask import render_template, Blueprint, request, make_response, session
 import random
 from datetime import datetime, timedelta
+from components.codes import codes
 user_blue_print = Blueprint(
     'user', __name__, template_folder='templates', static_folder='static')
 
@@ -21,6 +22,12 @@ def register():
 def logout():
     return '登出模块'
 
+@user_blue_print.route('/img/')
+def get_image():
+    image = codes().main()[1]
+    response = make_response(image)
+    response.content_type='image/png'
+    return response
 
 @user_blue_print.route('/set_cookie/')
 def set_cookie():

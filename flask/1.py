@@ -1,12 +1,12 @@
-from flask import Flask,make_response,Response,render_template
-from flask_cors import CORS
+from flask import Flask,make_response,Response,render_template,session
+# from flask_cors import CORS
 # from io import BytesIO
 import json
 
 app = Flask(__name__)
 
 # 解决跨域
-CORS(app)
+# CORS(app)
 
 
 @app.route('/main')
@@ -44,6 +44,12 @@ def test_my_json():
   }
   if isinstance(dic,dict):
     return json.dumps(dic)
+
+@app.route('/set_session/')
+def set_session():
+  session['HHH']='123456'
+
+
 
 if __name__ == '__main__':
   app.run(debug=True)
