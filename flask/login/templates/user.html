@@ -18,5 +18,10 @@
     <p>前面使用了user.</p>
     <!-- <img src="/user/static/1.jpg" alt="" /> -->
     <img src="{{url_for('user.static',filename='1.jpg')}}" alt="" />
+    <h2>{{uname}}</h2>
+    <img
+      src="{{url_for('user.get_image')}}"
+      style="width: 200px; height: 100px"
+    />
   </body>
 </html>
